@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/general.css';
+import Button from 'react-bootstrap/Button';
 
 function About() {
   return (
@@ -7,15 +8,17 @@ function About() {
         <div>
             logo here
         </div>
-        <h1>
-            About
-        </h1>
-        <p>
-            description
-        </p>
+        <div className='column'>
+            <h1>
+                About
+            </h1>
+            <p>
+                description
+            </p>
+        </div>
         <div className='row'>
-            <div>button/invite to discord</div>
-            <div>button/login</div>
+            <Button className='button'>INVITE TO DISCORD</Button>
+            <Button className='button'>LOGIN</Button>
         </div>
     </div>
     

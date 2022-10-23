@@ -1,0 +1,19 @@
+.background {
+    display: flex;
+    flex-direction: column;
+     background-color: #B0C0E7;
+     align-items: center;
+     justify-content: space-evenly;
+     padding: 60px;
+} 
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+   

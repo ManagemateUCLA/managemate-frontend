@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import logo from '../components/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 
-function About() {
+function Login() {
   return (
     <div className='background'>
         <div>
@@ -19,9 +19,8 @@ function About() {
             </p>
         </div>
         <div className='row'>
-            <Button className='button'>INVITE TO DISCORD</Button>
-            <Link to='/Login'>
-                <Button className='button'>LOGIN</Button>
+            <Link to='/Home'>
+                <Button className='button'>Login</Button>
             </Link>
         </div>
     </div>
@@ -29,4 +28,4 @@ function About() {
   );
 }
 
-export default About;
+export default Login;

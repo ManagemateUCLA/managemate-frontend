@@ -8,7 +8,11 @@ const About = () => {
     const [isLogin, setIsLogin] = useState(true);
 
     function attemptLogin() {
-        alert('it works!');
+        alert('loggin in!');
+    }
+
+    function register() {
+        alert('registered!');
     }
 
   return (
@@ -21,7 +25,9 @@ const About = () => {
                 About
             </h1>
             <p>
-                description
+                The bot offers a bulletin board for notifying your rommates of important messages, 
+                a dynamic calendar that compiles rommate's schedules and assigns chores and a tool 
+                for roommates to track bills and other shared expenses, so that everyone gets paid back.
             </p>
         </div>
         <div className='column' 
@@ -47,8 +53,8 @@ const About = () => {
                     <input className='formSubmit' type="submit" value="Login" 
                     onClick={()=> attemptLogin()}/>
                     
-                    <Link to='/Login'>
-                        <Button onClick={()=>attemptLogin()}>Login</Button>
+                    <Link to='/Home'>
+                        <Button>Home</Button>
                     </Link>
                 </form> 
             </div>
@@ -62,7 +68,7 @@ const About = () => {
                 </div>
 
                 <form className='form'>
-                    <h3 style={{textAlign: 'center', marginTop: '0px'}}>Register:</h3>
+                    <h2 style={{textAlign: 'center', marginTop: '0px'}}>Register:</h2>
                     <label>First Name:</label>
                     <input type="text" name="first" />
                     <label>Last Name:</label>
@@ -71,7 +77,8 @@ const About = () => {
                     <input type="text" name="register-email" />
                     <label>Password: </label>
                     <input type="text" name="register-password" />
-                    <input className='formSubmit' type="submit" value="Submit" />
+                    <input className='formSubmit' type="submit" value="Sign Up" 
+                     onClick={()=> register()}/>
                 </form> 
             </div>
             }     

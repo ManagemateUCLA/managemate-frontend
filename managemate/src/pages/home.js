@@ -12,8 +12,8 @@ function Home() {
         </div>
         <div className='row' 
             style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px'}}>
-            <Link className='link'>Transaction History</Link>
-            <Link className='link'>Roommate Calendar</Link>
+            <Link className='link' to='/Transaction'>Transaction History</Link>
+            <Link className='link' to='/Schedule'>Roommate Calendar</Link>
         </div>
         <div className='column' style={{margin:'20px'}}>
             <div className='row'>

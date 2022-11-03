@@ -4,28 +4,24 @@ import Button from 'react-bootstrap/Button';
 import logo from '../components/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 
-function Login() {
+function Transaction() {
   return (
     <div className='background'>
-        <div>
-            <img src={logo}></img>
-        </div>
-        <div className='column'>
+        <div>profile with total balance, owed money</div>
+        <div className='row'>
             <h1>
-                About
+                Transaction History
             </h1>
-            <p>
-                description
-            </p>
+            <Button>Add an Expense</Button>
         </div>
         <div className='row'>
-            <Link to='/Home'>
-                <Button className='button'>Login</Button>
-            </Link>
+            transactions
         </div>
+        <Link to='/Home'>
+            <Button className='button'>home</Button>
+        </Link>
     </div>
-    
   );
 }
 
-export default Login;
+export default Transaction;

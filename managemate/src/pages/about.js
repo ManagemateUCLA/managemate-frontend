@@ -16,7 +16,7 @@ const About = () => {
     }
 
   return (
-    <div className='background'>
+    <div className='background' style={{padding:'60px'}}>
         <div>
             <img src={logo}></img>
         </div>
@@ -32,7 +32,7 @@ const About = () => {
         </div>
         <div className='column' 
             style={{width: '500px', backgroundColor: '#FFFFFF', padding: '40px',
-            borderRadius: '25px'}}>
+            borderRadius: '25px', margin:'20px'}}>
             {isLogin ? 
             <div>
                 <div className='formTab'>

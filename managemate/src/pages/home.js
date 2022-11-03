@@ -15,15 +15,18 @@ function Home() {
             <Link className='link' to='/Transaction'>Transaction History</Link>
             <Link className='link' to='/Schedule'>Roommate Calendar</Link>
         </div>
-        <div className='column' style={{margin:'20px'}}>
-            <div className='row'>
-                <h1>Roomates</h1>
-                <Button className='button' style={{padding:'10px'}}>Add a Roomate</Button>
+        <div className='column' style={{width: '100%', margin:'20px', justifyContent: 'center', alignItems: 'center'}}>
+            <div className='row' style={{width: '80%', marginBottom:'20px', justifyContent: 'space-between', alignItems: 'center'}}>
+                <h1 style={{margin: '0px'}}>Roomates</h1>
+                <Button className='button' style={{height: '10%'}}>Add a Roomate</Button>
             </div>
-            <div className='column' style={{backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
+            <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
                 <div style={styles.roommateCard}>
-                    <p>First Last</p>
-                    <p>Owes an amount</p>
+                    <div className='row'>
+                        <p>First Last</p>
+                        <p>Owes an amount</p>
+                    </div>
+                    <div style={styles.bar}></div>
                 </div>
             </div>
         </div>
@@ -36,8 +39,15 @@ function Home() {
 const styles = {
     roommateCard: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-evenly"
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "10px",
+    },
+    bar: {
+        backgroundColor: "#4885ED",
+        height: "3px",
+        width: "90%",
     }
   }
 

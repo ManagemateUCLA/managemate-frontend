@@ -3,17 +3,46 @@ import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import logo from '../components/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
+import axios from "axios";
+
+const register = async() => {
+    const name = document.getElementById("first").value;
+    const last = document.getElementById("last").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+    console.log(name);
+    const params = {
+        name,
+        email,
+        password,
+    };
+    try {
+        await axios.post("/auth/register", { params });
+    } catch (err) {
+        console.error(err.response.data);
+        alert("Please try again!");
+    }
+};
+
+
+const login = async() => {
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    const params = {
+        email,
+        password,
+    };
+    try {
+        const res = await axios.post("/auth/login", { params });
+        console.log(res.data);
+    } catch (err) {
+        console.error(err.response.data);
+        alert("Either your email or your password is not recognized. Please try again!");
+    }
+};
 
 const About = () => {
     const [isLogin, setIsLogin] = useState(true);
-
-    function attemptLogin() {
-        alert('loggin in!');
-    }
-
-    function register() {
-        alert('registered!');
-    }
 
   return (
     <div className='background' style={{padding:'60px'}}>
@@ -45,13 +74,13 @@ const About = () => {
                 <form className='form'>
                     <h2 style={{textAlign: 'center', marginTop: '0px'}}>Login:</h2>
                     <label>Email:</label>
-                    <input type="text" name="login-email" />
+                    <input type="text" id="login-email" />
                     
                     <label>Password:</label>
-                    <input type="text" name="login-password" />
+                    <input type="text" id="login-password" />
 
                     <input className='formSubmit' type="submit" value="Login" 
-                    onClick={()=> attemptLogin()}/>
+                    onClick={login}/>
                     
                     <Link to='/Home'>
                         <Button>Home</Button>
@@ -70,15 +99,15 @@ const About = () => {
                 <form className='form'>
                     <h2 style={{textAlign: 'center', marginTop: '0px'}}>Register:</h2>
                     <label>First Name:</label>
-                    <input type="text" name="first" />
+                    <input type="text" id="first" />
                     <label>Last Name:</label>
-                    <input type="text" name="last" />
+                    <input type="text" id="last" />
                     <label>Email: </label>
-                    <input type="text" name="register-email" />
+                    <input type="text" id="register-email" />
                     <label>Password: </label>
-                    <input type="text" name="register-password" />
+                    <input type="text" id="register-password" />
                     <input className='formSubmit' type="submit" value="Sign Up" 
-                     onClick={()=> register()}/>
+                     onClick={register}/>
                 </form> 
             </div>
             }     

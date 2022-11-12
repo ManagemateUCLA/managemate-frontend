@@ -26,7 +26,7 @@ function Home() {
                         <p>First Last</p>
                         <p>Owes an amount</p>
                     </div>
-                    <div style={styles.bar}></div>
+                    <div className='bar'></div>
                 </div>
             </div>
         </div>
@@ -44,11 +44,6 @@ const styles = {
         alignItems: "center",
         padding: "10px",
     },
-    bar: {
-        backgroundColor: "#4885ED",
-        height: "3px",
-        width: "90%",
-    }
   }
 
 export default Home;

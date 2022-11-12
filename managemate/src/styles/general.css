@@ -84,3 +84,9 @@
     text-decoration: none;
     color: #4885ED;
 }
+
+.bar {
+    background-color: #4885ED;
+    height: 3px;
+    width: 90%;
+}

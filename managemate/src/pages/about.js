@@ -6,8 +6,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import axios from "axios";
 
 const register = async() => {
-    const name = document.getElementById("first").value;
-    const last = document.getElementById("last").value;
+    const name = document.getElementById("name").value;
     const email = document.getElementById("register-email").value;
     const password = document.getElementById("register-password").value;
     console.log(name);
@@ -32,8 +31,10 @@ const login = async() => {
         email,
         password,
     };
+
+    console.log(params);
     try {
-        const res = await axios.post("/auth/login", { params });
+        const res = await axios.post("/auth/login/", { params });
         console.log(res.data);
     } catch (err) {
         console.error(err.response.data);
@@ -80,7 +81,7 @@ const About = () => {
                     <input type="text" id="login-password" />
 
                     <input className='formSubmit' type="submit" value="Login" 
-                    onClick={login}/>
+                    onClick={() => login}/>
                     
                     <Link to='/Home'>
                         <Button>Home</Button>
@@ -98,10 +99,8 @@ const About = () => {
 
                 <form className='form'>
                     <h2 style={{textAlign: 'center', marginTop: '0px'}}>Register:</h2>
-                    <label>First Name:</label>
-                    <input type="text" id="first" />
-                    <label>Last Name:</label>
-                    <input type="text" id="last" />
+                    <label>Name:</label>
+                    <input type="text" id="name" />
                     <label>Email: </label>
                     <input type="text" id="register-email" />
                     <label>Password: </label>

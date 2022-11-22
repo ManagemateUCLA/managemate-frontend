@@ -23,6 +23,7 @@ const register = async() => {
         console.error(err.response.data);
         alert("Please try again!");
     }
+    //window.location.href = window.location.href;
 };
 
 
@@ -38,6 +39,7 @@ const login = async() => {
         console.error(err.response.data);
         alert("Either your email or your password is not recognized. Please try again!");
     }
+    //window.location.href = window.location.href;
 };
 
 const About = () => {
@@ -83,7 +85,7 @@ const About = () => {
                         <input type="text" id="login-email" />
                         <label>Password:</label>
                         <input type="password" id="login-password" />
-                        <input className='formSubmit' type="submit" value="Login" 
+                        <input className='formSubmit' value="Login" 
                         onClick={login}/>
                     </form> 
                 </div>
@@ -104,7 +106,7 @@ const About = () => {
                         <input type="text" id="register-email" />
                         <label>Password: </label>
                         <input type="password" id="register-password" />
-                        <input className='formSubmit' type="submit" value="Sign Up" 
+                        <input className='formSubmit' value="Sign Up" 
                         onClick={register}/>
                     </form> 
                 </div>

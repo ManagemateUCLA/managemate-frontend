@@ -16,7 +16,7 @@ const About = () => {
         const password = document.getElementById("register-password").value;
         
         try {
-            const res = await axios.post("/auth/register", { name: name, email: email, discord: discord, password: password });
+            const res = await axios.post("/auth/register", { name: name, email: email, discordUserId: discord, password: password });
             console.log(res.data);
             window.localStorage.setItem("userkey", res.data.user);
             navigate('/home');

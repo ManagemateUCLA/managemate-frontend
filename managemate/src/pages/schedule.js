@@ -5,9 +5,10 @@ import { guid } from '@progress/kendo-react-common';
 import { Scheduler, DayView, WeekView } from '@progress/kendo-react-scheduler';
 import '@progress/kendo-date-math/tz/America/Los_Angeles';
 import { sampleDataWithCustomSchema, displayDate, customModelFields } from '../components/events-utc';
-import { HashLink as Link } from 'react-router-hash-link';
+import {useNavigate} from "react-router-dom";
 
 function Schedule() {
+    const navigate = useNavigate();
     const [view, setView] = React.useState('day');
     const [date, setDate] = React.useState(displayDate);
     const [data, setData] = React.useState(sampleDataWithCustomSchema);
@@ -29,6 +30,9 @@ function Schedule() {
 
   return (
     <div className='background'>
+        <div style={{width: '100%', paddingLeft: '10%', marginBottom: '20px'}}>
+            <Button className='button' onClick={()=>navigate('/home')}>Home</Button>
+        </div>
         <Scheduler data={data} onDataChange={handleDataChange} view={view} 
         onViewChange={handleViewChange} 
         date={date} onDateChange={handleDateChange} modelFields={customModelFields} 
@@ -60,12 +64,9 @@ function Schedule() {
         //   colorField: 'color'
         // }]}
         >
-              <DayView />
-              <WeekView />
-            </Scheduler>
-        <Link to='/Home'>
-            <Button className='button'>home</Button>
-        </Link>
+            <DayView />
+            <WeekView />
+        </Scheduler>
     </div>
     )
 }

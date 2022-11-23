@@ -2,48 +2,53 @@ import React, {useState} from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import logo from '../components/logo.png';
-import { HashLink as Link } from 'react-router-hash-link';
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
-
-const logout = () => {
-    window.localStorage.clear();
-    window.location.reload();
-}
-
-const register = async() => {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("register-email").value;
-    const password = document.getElementById("register-password").value;
-    
-    try {
-        const res = await axios.post("/auth/register", { name: name, email: email, password: password });
-        console.log(res.data);
-        window.localStorage.setItem("userkey", res.data.user);
-    } catch (err) {
-        console.error(err.response.data);
-        alert("Please try again!");
-    }
-    //window.location.href = window.location.href;
-};
-
-
-const login = async() => {
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
-
-    try {
-        const res = await axios.post("/auth/login", { email: email, password: password });
-        console.log(res.data);
-        window.localStorage.setItem("userkey", res.data.user);
-    } catch (err) {
-        console.error(err.response.data);
-        alert("Either your email or your password is not recognized. Please try again!");
-    }
-    //window.location.href = window.location.href;
-};
 
 const About = () => {
     const [isLogin, setIsLogin] = useState(true);
+    const navigate = useNavigate();
+
+    const register = async() => {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("register-email").value;
+        const discord = document.getElementById("register-discord").value;
+        const password = document.getElementById("register-password").value;
+        
+        try {
+            const res = await axios.post("/auth/register", { name: name, email: email, discord: discord, password: password });
+            console.log(res.data);
+            window.localStorage.setItem("userkey", res.data.user);
+            navigate('/Home');
+    
+        } catch (err) {
+            console.error(err.response.data);
+            alert("Please try again!");
+        }
+    };
+
+    const login = async() => {
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        try {
+            const res = await axios.post("/auth/login", { email: email, password: password });
+            console.log(res.data);
+            window.localStorage.setItem("userkey", res.data.user);
+            navigate('/Home');
+
+        } catch (err) {
+            console.error(err.response.data);
+            alert("Either your email or your password is not recognized. Please try again!");
+        }
+    };
+
+    const logout = () => {
+        window.localStorage.clear();
+        navigate('/about');
+    }
+
+
 
   return (
     <div className='background' style={{padding:'60px'}}>
@@ -64,11 +69,9 @@ const About = () => {
             style={{width: '500px', backgroundColor: '#FFFFFF', padding: '40px',
             borderRadius: '25px', margin:'20px'}}>
             {window.localStorage.getItem("userkey") ? 
-                <div>
-                    <Link to='/Home'>
-                        <Button>Home</Button>
-                    </Link> 
-                    <Button onClick={logout}>Logout</Button>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Button className='button' onClick={()=> navigate('/home')}>Home</Button>
+                    <Button className='button' onClick={logout}>Logout</Button>
                 </div>
             : <div>{isLogin ? 
                 <div>
@@ -104,6 +107,8 @@ const About = () => {
                         <input type="text" id="name" />
                         <label>Email: </label>
                         <input type="text" id="register-email" />
+                        <label>Discord: </label>
+                        <input type="text" id="register-discord" />
                         <label>Password: </label>
                         <input type="password" id="register-password" />
                         <input className='formSubmit' value="Sign Up" 

@@ -3,12 +3,15 @@ import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import logo from '../components/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
+import {useNavigate} from "react-router-dom";
 
 function Home() {
+    const navigate = useNavigate();
+    
   return (
     <div className='background'>
         <div>
-            <img src={logo}></img>
+            <Button className="logo" onClick={()=> navigate('/about')}><img src={logo}></img></Button>
         </div>
         <div className='row' 
             style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px 0px 8px 0px'}}>
@@ -26,11 +29,10 @@ function Home() {
                         <p>First Last</p>
                         <p>Owes an amount</p>
                     </div>
-                    <div style={styles.bar}></div>
+                    <div className='bar'></div>
                 </div>
             </div>
         </div>
-        <Link to='/About'>About Page</Link>
     </div>
     
   );
@@ -44,11 +46,6 @@ const styles = {
         alignItems: "center",
         padding: "10px",
     },
-    bar: {
-        backgroundColor: "#4885ED",
-        height: "3px",
-        width: "90%",
-    }
   }
 
 export default Home;

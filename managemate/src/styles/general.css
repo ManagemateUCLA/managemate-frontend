@@ -33,6 +33,13 @@
 .button:hover {
     cursor: pointer;
 }
+.logo {
+    background-color: #B0C0E7;
+    border: none;
+}
+.logo:hover {
+    cursor: pointer;
+}
 
 /* ============FORM=========*/
 .form {
@@ -93,4 +100,10 @@
 .link {
     text-decoration: none;
     color: #4885ED;
+}
+
+.bar {
+    background-color: #4885ED;
+    height: 3px;
+    width: 90%;
 }

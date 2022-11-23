@@ -19,7 +19,7 @@ const About = () => {
             const res = await axios.post("/auth/register", { name: name, email: email, discord: discord, password: password });
             console.log(res.data);
             window.localStorage.setItem("userkey", res.data.user);
-            navigate('/Home');
+            navigate('/home');
     
         } catch (err) {
             console.error(err.response.data);
@@ -35,7 +35,7 @@ const About = () => {
             const res = await axios.post("/auth/login", { email: email, password: password });
             console.log(res.data);
             window.localStorage.setItem("userkey", res.data.user);
-            navigate('/Home');
+            navigate('/home');
 
         } catch (err) {
             console.error(err.response.data);
@@ -48,12 +48,10 @@ const About = () => {
         navigate('/about');
     }
 
-
-
   return (
     <div className='background' style={{padding:'60px'}}>
         <div>
-            <img src={logo}></img>
+            <Button className="logo" onClick={()=> navigate('/about')}><img src={logo}></img></Button>
         </div>
         <div className='column'>
             <h1>

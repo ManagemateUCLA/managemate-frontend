@@ -3,12 +3,15 @@ import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import logo from '../components/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
+import {useNavigate} from "react-router-dom";
 
 function Home() {
+    const navigate = useNavigate();
+    
   return (
     <div className='background'>
         <div>
-            <img src={logo}></img>
+            <Button className="logo" onClick={()=> navigate('/about')}><img src={logo}></img></Button>
         </div>
         <div className='row' 
             style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px'}}>
@@ -30,7 +33,6 @@ function Home() {
                 </div>
             </div>
         </div>
-        <Link to='/About'>About Page</Link>
     </div>
     
   );

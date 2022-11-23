@@ -30,6 +30,13 @@
     border-radius: 10px;
     color: #FFFFFF;
 }
+.logo {
+    background-color: #B0C0E7;
+    border: none;
+}
+.logo:hover {
+    cursor: pointer;
+}
 
 /* ============FORM=========*/
 .form {

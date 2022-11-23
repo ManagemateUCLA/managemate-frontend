@@ -1,11 +1,16 @@
 import React from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
-import { HashLink as Link } from 'react-router-hash-link';
+import {useNavigate} from "react-router-dom";
 
 function Transaction() {
+    const navigate = useNavigate();
+
   return (
     <div className='background'>
+        <div style={{width: '100%', paddingLeft: '10%', marginBottom: '20px'}}>
+            <Button className='button' onClick={()=>navigate('/home')}>Home</Button>
+        </div>
         <div className='row' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px', alignItems: 'center'}}>
             <h3>First Last</h3>
             <p style={{color: '#D33610'}}>You owe: -$124</p>
@@ -33,9 +38,6 @@ function Transaction() {
                 </div>
             </div>
         </div>
-        <Link to='/Home'>
-            <Button className='button'>home</Button>
-        </Link>
     </div>
     
   );

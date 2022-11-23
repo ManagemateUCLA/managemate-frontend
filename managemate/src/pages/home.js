@@ -11,7 +11,7 @@ function Home() {
             <img src={logo}></img>
         </div>
         <div className='row' 
-            style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px'}}>
+            style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px 0px 8px 0px'}}>
             <Link className='link' to='/Transaction'>Transaction History</Link>
             <Link className='link' to='/Schedule'>Roommate Calendar</Link>
         </div>

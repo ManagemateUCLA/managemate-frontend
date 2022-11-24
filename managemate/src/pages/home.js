@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import logo from '../components/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 
 function Home() {
@@ -13,6 +14,40 @@ function Home() {
     const [isCreate, setIsCreate] = useState(false);
     const closeModal = () => setShowModal(false);
     const openModal = () => setShowModal(true);
+    const token = window.localStorage.getItem("userkey");
+    console.log("userkey: ", window.localStorage.getItem("userkey"));
+    
+    const createGroup = async() => {
+        const groupName = document.getElementById("group-name").value;
+        const groupId = document.getElementById("group-id");
+
+        try {
+            const res = await axios.post("/roommateGroup/create", {groupName: groupName}, 
+                { headers: {'auth-token': token}});
+            console.log(res.data);
+
+            groupId.innerText = "Group Code: " + res.data.gid;
+        } catch (err) {
+            console.error(err.response.data);
+            groupId.innerText = "Something went wrong. Please try again.";
+        }
+    };
+    
+    const joinGroup = async() => {
+        const groupCode = document.getElementById("group-code").value;
+        const resultMessage = document.getElementById("result-message");
+
+        try {
+            const res = await axios.post("/roommateGroup/join", {gid: groupCode}, 
+                { headers: {'auth-token': token}});
+            console.log(res.data);
+
+            resultMessage.innerText = "Successfully added!";
+        } catch (err) {
+            console.error(err.response.data);
+            resultMessage.innerText = "You're already in the group or the code is invalid.";
+        }
+    };
     
   return (
     <div style={{position: 'relative'}}>      
@@ -48,16 +83,30 @@ function Home() {
         </div>
         
         <Modal style={styles.modal} show={showModal} onHide={closeModal}>
-            <Button variant="secondary" onClick={closeModal}>
+            <Button className="button" style={{backgroundColor: '#4885ed'}} onClick={closeModal}>
                 Close
             </Button>
             {isCreate ? 
             <Modal.Body>
-                <p>Roommate Group Code: #######</p>
+               <form className='form'>
+                    <h2 style={{textAlign: 'center', marginTop: '0px'}}>Create a Group</h2>
+                    <label>Group Name:</label>
+                    <input type="text" id="group-name" />
+                    <input className='formSubmit' value="Create Group" 
+                    onClick={createGroup}/>
+                </form> 
+                <p id="group-id" style={{padding: '10px'}}></p>
             </Modal.Body> 
             :
-            <Modal.Body>
-                Input your roommate group code:
+            <Modal.Body> 
+                <form className='form'>
+                    <h2 style={{textAlign: 'center', marginTop: '0px'}}>Join a Group</h2>
+                    <label>Group Code:</label>
+                    <input type="text" id="group-code" />
+                    <input className='formSubmit' value="Join Group" 
+                    onClick={joinGroup}/>
+                </form> 
+                <p id="result-message" style={{padding: '10px'}}></p>
             </Modal.Body>
             }
         </Modal>
@@ -79,7 +128,7 @@ const styles = {
         left: '50%',
         transform: 'translate(-50%, -20%)',
         textAlign: 'center',
-        backgroundColor: "#A6DCF0",
+        backgroundColor: "#4885ed",
         padding: '20px',
         borderRadius: '20px',
     }

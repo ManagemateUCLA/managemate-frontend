@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function Transaction() {
     const navigate = useNavigate();
+    const [groupId, setGroupId] = useState([]);
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        const token = window.localStorage.getItem("userkey");
+        console.log("token: ", token);
+        async function getRoommateGroup() {
+            try {
+                const res = await axios.get("/roommateGroup/", {headers: {'auth-token': token}});
+                //console.log(res.data);
+                setGroupId(res.data.gid);
+            } catch (err) {
+                console.error(err.response.data);
+                alert("Could not get group id.");
+            }
+        }
+        getRoommateGroup();
+
+        async function getTransactions() {
+            try {
+                const res = await axios.get("/finance/getTransactions", { gid: groupId }, {headers: {'auth-token': token}});
+                console.log(res.data);
+                setTransactions(res.data);
+            } catch (err) {
+                console.error(err.response.data);
+                alert("Could not load transactions.");
+            }
+        }
+        getTransactions();
+      }, []);
 
   return (
     <div className='background'>
@@ -21,13 +52,14 @@ function Transaction() {
                 <h1 style={{margin: '0px'}}>Transaction History</h1>
             </div>
             <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
+                {transactions.map((transaction, index) => (
                 <div style={styles.transactionCard}>
                     <div className='row' style={{marginBottom: '10px'}}>
                         <div style={{display: 'flex', flexDirection: 'row', width: '80%'}}>
-                            <div style={styles.dateBox}>Oct 18</div>
+                            <div style={styles.dateBox}>{transaction.date}</div>
                             <div>
-                                <h3 style={{margin:'0px'}}>Boba</h3>
-                                <p style={{marginBottom:'0px'}}>First Last paid ____</p>
+                                <h3 style={{margin:'0px'}}>{transaction.title}</h3>
+                                <p style={{marginBottom:'0px'}}>{transaction.borrowers} borrowed {transaction.amount} from {transaction.lender}</p>
                             </div>
                         </div>
                         <div style={{marginLeft: 'auto'}}>
@@ -36,6 +68,8 @@ function Transaction() {
                     </div>
                     <div className='bar'></div>
                 </div>
+                )}
+                
             </div>
         </div>
     </div>

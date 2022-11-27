@@ -18,7 +18,7 @@ const About = () => {
         try {
             const res = await axios.post("/auth/register", { name: name, email: email, discord: discord, password: password });
             console.log(res.data);
-            window.localStorage.setItem("userkey", res.data.user);
+            window.localStorage.setItem("userkey", res.data.token);
             navigate('/home');
     
         } catch (err) {
@@ -34,7 +34,7 @@ const About = () => {
         try {
             const res = await axios.post("/auth/login", { email: email, password: password });
             console.log(res.data);
-            window.localStorage.setItem("userkey", res.data.user);
+            window.localStorage.setItem("userkey", res.data.token);
             navigate('/home');
 
         } catch (err) {

@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function Transaction() {
     const navigate = useNavigate();
+    const [groupId, setGroupId] = useState([]);
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        const token = window.localStorage.getItem("userkey");
+        console.log("token: ", token);
+        async function getRoommateGroup() {
+            try {
+                const res = await axios.get("/roommateGroup/", {headers: {'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzYzNTM4YTY3NzJkZDM1ODdlZjM1MTkiLCJuYW1lIjoiaGFiaWJpIiwiZW1haWwiOiJoYWJpYmljYWZlQGhhYmliaS5jb20iLCJpYXQiOjE2NjkyNjU0MTl9.9ij_1LfduAQmuD4s6gLVxQJhGMF13Ice5SILmWlgrYw'}});
+                console.log(res.data);
+                setGroupId(res.data.gid);
+            } catch (err) {
+                console.error(err.response.data);
+                alert("Could not get group id.");
+            }
+        }
+        getRoommateGroup();
+
+        // async function getTransactions() {
+        //     try {
+        //         const res = await axios.get("/finance/getTransactions", { gid: groupId });
+        //         console.log(res.data);
+    
+        //     } catch (err) {
+        //         console.error(err.response.data);
+        //         alert("Could not load transactions.");
+        //     }
+        // }
+        // getTransactions();
+      }, []);
 
   return (
     <div className='background'>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function Transaction() {
     const navigate = useNavigate();

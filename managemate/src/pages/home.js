@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -12,10 +12,60 @@ function Home() {
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [isCreate, setIsCreate] = useState(false);
+    const [bulletinBoardMessages, setBulletinBoardMessages] = useState([]);
+    const [groupId, setGroupId] = useState(null);
+    const [roommateList, setRoommateList] = useState([]);
     const closeModal = () => setShowModal(false);
     const openModal = () => setShowModal(true);
     const token = window.localStorage.getItem("userkey");
     console.log("userkey: ", window.localStorage.getItem("userkey"));
+
+    useEffect(() => {
+        const token = window.localStorage.getItem("userkey");
+        console.log("token: ", token);
+        async function getGroupId() {
+            try {
+                const res = await axios.get("/user/checkUserInGroup/", {headers: {'auth-token': token}});
+                console.log("groupId: ", res.data.gid);
+                setGroupId(res.data.gid);
+            } catch (err) {
+                console.error(err.response.data);
+                console.log("Not in a group.");
+            }
+        }
+        getGroupId();
+      }, []);
+
+      useEffect(() => {
+        if(groupId) {
+            async function getRoommateList() {
+                try {
+                    console.log("variable: ", groupId);
+                    const roommateListUrl = "/roommateGroup/"+groupId+"/listRoommates/";
+                    console.log(roommateListUrl);
+                    const res = await axios.get(roommateListUrl);
+                    console.log("Roommates: ", res.data);
+                    setRoommateList(res.data);
+                } catch (err) {
+                    console.error(err.response.data);
+                    console.log("Couldn't get roommates.");
+                }
+            }
+            getRoommateList();
+
+        async function getBulletinBoard() {
+            try {
+                const res = await axios.get("/bulletinBoard/", {headers: {'auth-token': token}});
+                console.log("roommateGroup data: ", res.data);
+                setBulletinBoardMessages(res.data);
+            } catch (err) {
+                console.error(err.response.data);
+                console.log("No messages.");
+            }
+        }
+        getBulletinBoard();
+        }
+      }, [groupId]);
     
     const createGroup = async() => {
         const groupName = document.getElementById("group-name").value;
@@ -45,7 +95,7 @@ function Home() {
             resultMessage.innerText = "Successfully added!";
         } catch (err) {
             console.error(err.response.data);
-            resultMessage.innerText = "You're already in the group or the code is invalid.";
+            resultMessage.innerText = "Invalid code. Please try again.";
         }
     };
     
@@ -55,31 +105,57 @@ function Home() {
             <div>
                 <Button className="logo" onClick={()=> navigate('/about')}><img src={logo}></img></Button>
             </div>
-            <div className='row' 
-                style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px 0px 8px 0px'}}>
-                <Link className='link' to='/Transaction'>Transaction History</Link>
-                <Link className='link' to='/Schedule'>Roommate Calendar</Link>
-            </div>
-            <div className='column' style={{width: '100%', margin:'20px', justifyContent: 'center', alignItems: 'center'}}>
-                <div className='row' style={{width: '80%', marginBottom:'20px', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <h1 style={{margin: '0px'}}>Roomates</h1>
-                    <div>
-                        <Button className='button' style={{height: '10%', marginRight: '10px'}} 
-                            onClick={() => {setIsCreate(true); openModal();}}>Create a Group</Button>
-                        <Button className='button' style={{height: '10%'}} 
-                            onClick={() => {setIsCreate(false); openModal();}}>Join a Group</Button>
-                    </div> 
+            {groupId ? (
+                <div style={{width: '100%'}}>
+                <div className='row' 
+                    style={{width:'100%', backgroundColor:'#F6E5B6', padding: '8px 0px 8px 0px'}}>
+                    <Link className='link' to='/Transaction'>Transaction History</Link>
+                    <Link className='link' to='/Schedule'>Roommate Calendar</Link>
                 </div>
+                <div className='column' style={{width: '100%', margin:'20px', justifyContent: 'center', alignItems: 'center'}}>  
+                <h1 style={{marginBottom: '20px', width: '80%'}}>Roommates</h1>
+                {roommateList.map((roommate, index) => (
                 <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
                     <div style={styles.roommateCard}>
-                        <div className='row'>
-                            <p>First Last</p>
-                            <p>Owes an amount</p>
+                        <p style={{width: '100%'}}>{roommate}</p>
+                        <div className='bar'></div>
+                    </div>
+                </div>
+                ))}
+                <h1 style={{marginBottom: '20px', width: '80%'}}>Bulletin Board</h1>
+                {bulletinBoardMessages.length === 0 && (
+                <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
+                    <div style={styles.messageCard}>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                            <p style={{width: '100%'}}>No messages.</p>
+                        </div>
+                    </div>
+                </div>
+                )}
+                {bulletinBoardMessages.map((message, index) => (
+                <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
+                    <div style={styles.messageCard}>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                            <p style={{width: '20%', borderRight: '1px solid black', paddingRight: '4px'}}>{message.discordUserId}</p>
+                            <p style={{paddingLeft: '4px'}}>{message.message}</p>
                         </div>
                         <div className='bar'></div>
                     </div>
                 </div>
+                ))}
             </div>
+                </div>
+            ) : (
+                <div className='column' style={{width: '100%', margin:'20px', justifyContent: 'center', alignItems: 'center'}}> 
+                <h1 style={{width: '80%', textAlign: 'center'}}>You are not in a roommate group. Please either create or join a group.</h1>
+                <div className='row' style={{width: '50%', margin:'20px', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Button className='button' style={{height: '10%'}} 
+                            onClick={() => {setIsCreate(true); openModal();}}>Create a Group</Button>
+                        <Button className='button' style={{height: '10%'}} 
+                            onClick={() => {setIsCreate(false); openModal();}}>Join a Group</Button>
+                </div>
+                </div>
+            )}
         </div>
         
         <Modal style={styles.modal} show={showModal} onHide={closeModal}>
@@ -119,6 +195,12 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
+        padding: "10px",
+    },
+    messageCard: {
+        display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         padding: "10px",
     },

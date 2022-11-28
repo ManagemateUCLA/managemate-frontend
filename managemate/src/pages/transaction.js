@@ -19,7 +19,7 @@ function Transaction() {
                 setRoommateGroup(res.data);
             } catch (err) {
                 console.error(err.response.data);
-                alert("Not in a group.");
+                console.log("Not in a group.");
             }
         }
         getRoommateGroup();
@@ -31,7 +31,7 @@ function Transaction() {
                 setTransactions(res.data);
             } catch (err) {
                 console.error(err.response.data);
-                alert("Could not load transactions.");
+                console.log("Could not load transactions.");
             }
         }
         getTransactions();

@@ -22,7 +22,7 @@ function Home() {
         const groupId = document.getElementById("group-id");
 
         try {
-            const res = await axios.post("/roommateGroup/create", {groupName: groupName}, 
+            const res = await axios.post("http:localhost:8080/roommateGroup/create", {groupName: groupName}, 
                 { headers: {'auth-token': token}});
             console.log(res.data);
 
@@ -38,7 +38,7 @@ function Home() {
         const resultMessage = document.getElementById("result-message");
 
         try {
-            const res = await axios.post("/roommateGroup/join", {gid: groupCode}, 
+            const res = await axios.post("http://localhost:8080/roommateGroup/join", {gid: groupCode}, 
                 { headers: {'auth-token': token}});
             console.log(res.data);
 

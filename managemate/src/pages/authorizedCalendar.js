@@ -5,29 +5,28 @@ import logo from '../components/logo.png';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const AuthorizedCalendar = () => {
+const AuthorizedCalendar =  () => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const code = urlParams.get("code");
-        console.log(code);
-        const token = window.localStorage.getItem("userkey");
-
-        async function passGcalToken() {
-        try {
-            const res = await axios.post("/user/addToken", { code: code }, { headers: {'auth-token': token}});
-            //console.log(res.data);
-            navigate('/home');
-
-        } catch (err) {
-            console.error(err.response.data);
-        }
-        }
-        passGcalToken();
-    }, []);
-    
+        useEffect( () => {
+            
+            console.log("Hi\n");
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const code = urlParams.get("code");
+            let token = window.localStorage.getItem("userkey");
+            async function passGcalToken() {
+                try {
+                    const res = await axios.post("http://localhost:8080/user/addToken", { code: code }, { headers: {'auth-token': token}});
+                    //console.log(res.data);
+        
+                } catch (err) {
+                    console.error(err.response.data);
+                }
+            }
+            passGcalToken();
+            // navigate('/home');
+          }, []);
+        
     return (
         <div className='background' style={{padding:'60px'}}>
             <div>

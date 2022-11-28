@@ -14,7 +14,7 @@ function Transaction() {
         console.log("token: ", token);
         async function getRoommateGroup() {
             try {
-                const res = await axios.get("/roommateGroup/", {headers: {'auth-token': token}});
+                const res = await axios.get("http://localhost:8080/roommateGroup/", {headers: {'auth-token': token}});
                 console.log("roommateGroup data: ", res.data);
                 setRoommateGroup(res.data);
             } catch (err) {
@@ -26,7 +26,7 @@ function Transaction() {
 
         async function getTransactions() {
             try {
-                const res = await axios.get("/finance/getTransactions", { gid: roommateGroup.gid }, {headers: {'auth-token': token}});
+                const res = await axios.get("http://localhost:8080/finance/getTransactions", { gid: roommateGroup.gid }, {headers: {'auth-token': token}});
                 console.log("transaction data: ", res.data);
                 setTransactions(res.data);
             } catch (err) {

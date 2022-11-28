@@ -30,7 +30,7 @@ function Schedule() {
 
   return (
     <div className='background'>
-        <div style={{width: '100%', paddingLeft: '10%', marginBottom: '20px'}}>
+        <div style={{width: '90%', marginBottom: '20px'}}>
             <Button className='button' onClick={()=>navigate('/home')}>Home</Button>
         </div>
         <Scheduler data={data} onDataChange={handleDataChange} view={view} 

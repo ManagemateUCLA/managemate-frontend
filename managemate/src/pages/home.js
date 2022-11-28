@@ -40,10 +40,7 @@ function Home() {
         if(groupId) {
             async function getRoommateList() {
                 try {
-                    console.log("variable: ", groupId);
-                    const roommateListUrl = "/roommateGroup/"+groupId+"/listRoommates/";
-                    console.log(roommateListUrl);
-                    const res = await axios.get(roommateListUrl);
+                    const res = await axios.get("/roommateGroup/"+groupId+"/listRoommates/");
                     console.log("Roommates: ", res.data);
                     setRoommateList(res.data);
                 } catch (err) {
@@ -56,7 +53,7 @@ function Home() {
         async function getBulletinBoard() {
             try {
                 const res = await axios.get("/bulletinBoard/", {headers: {'auth-token': token}});
-                console.log("roommateGroup data: ", res.data);
+                console.log("Messages: ", res.data);
                 setBulletinBoardMessages(res.data);
             } catch (err) {
                 console.error(err.response.data);
@@ -112,28 +109,26 @@ function Home() {
                     <Link className='link' to='/Transaction'>Transaction History</Link>
                     <Link className='link' to='/Schedule'>Roommate Calendar</Link>
                 </div>
-                <div className='column' style={{width: '100%', margin:'20px', justifyContent: 'center', alignItems: 'center'}}>  
+                <div className='column' style={{width: '100%', marginTop:'20px', marginBottom:'20px',mjustifyContent: 'center', alignItems: 'center'}}>  
                 <h1 style={{marginBottom: '20px', width: '80%'}}>Roommates</h1>
-                {roommateList.map((roommate, index) => (
                 <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
+                {roommateList.map((roommate, index) => (
                     <div style={styles.roommateCard}>
                         <p style={{width: '100%'}}>{roommate}</p>
                         <div className='bar'></div>
                     </div>
-                </div>
                 ))}
+                </div>
                 <h1 style={{marginBottom: '20px', width: '80%'}}>Bulletin Board</h1>
-                {bulletinBoardMessages.length === 0 && (
                 <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
+                {bulletinBoardMessages.length === 0 && (
                     <div style={styles.messageCard}>
                         <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
                             <p style={{width: '100%'}}>No messages.</p>
                         </div>
                     </div>
-                </div>
-                )}
+                )} 
                 {bulletinBoardMessages.map((message, index) => (
-                <div className='column' style={{width: '80%', backgroundColor:'#FFFFFF', borderRadius:'20px'}}>
                     <div style={styles.messageCard}>
                         <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
                             <p style={{width: '20%', borderRight: '1px solid black', paddingRight: '4px'}}>{message.discordUserId}</p>
@@ -141,12 +136,12 @@ function Home() {
                         </div>
                         <div className='bar'></div>
                     </div>
-                </div>
                 ))}
-            </div>
+                </div>
+                </div>
                 </div>
             ) : (
-                <div className='column' style={{width: '100%', margin:'20px', justifyContent: 'center', alignItems: 'center'}}> 
+                <div className='column' style={{width: '100%', marginTop:'20px', marginBottom:'20px',justifyContent: 'center', alignItems: 'center'}}> 
                 <h1 style={{width: '80%', textAlign: 'center'}}>You are not in a roommate group. Please either create or join a group.</h1>
                 <div className='row' style={{width: '50%', margin:'20px', justifyContent: 'space-between', alignItems: 'center'}}>
                         <Button className='button' style={{height: '10%'}} 

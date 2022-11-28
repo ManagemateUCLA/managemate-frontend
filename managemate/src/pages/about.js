@@ -16,12 +16,10 @@ const About = () => {
         const password = document.getElementById("register-password").value;
         
         try {
-            //const res = await axios.post("/auth/register", { name: name, email: email, discordUserId: discord, password: password });
-            //console.log(res.data);
-           // window.localStorage.setItem("userkey", res.data.token);
-            window.location.href = "https://accounts.google.com/o/oauth2/v2/auth?client_id=396864400018-qjupj3m1d2mg3uukq8frfh02i6krau6i.apps.googleusercontent.com&redirect_uri=http://localhost:3000/authorizedCalendar&response_type=code&scope=https://www.googleapis.com/auth/calendar&access_type=offline";
-            //navigate('/home');
-    
+            const res = await axios.post("/auth/register", { name: name, email: email, discordUserId: discord, password: password });
+            console.log(res.data);
+            window.localStorage.setItem("userkey", res.data.token);
+            window.location.href = "https://accounts.google.com/o/oauth2/v2/auth?client_id=396864400018-qjupj3m1d2mg3uukq8frfh02i6krau6i.apps.googleusercontent.com&redirect_uri=http://localhost:3000/authorizedCalendar&response_type=code&scope=https://www.googleapis.com/auth/calendar&access_type=offline"; 
         } catch (err) {
             console.error(err.response.data);
             alert("Please try again!");

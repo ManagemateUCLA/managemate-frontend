@@ -8,6 +8,7 @@ function Transaction() {
     const navigate = useNavigate();
     const [roommateGroup, setRoommateGroup] = useState([]);
     const [transactions, setTransactions] = useState([]);
+    const token = window.localStorage.getItem("userkey");
 
     function formatDate(d) {
         const epoch = Date.parse(d);
@@ -16,7 +17,6 @@ function Transaction() {
     }
 
     useEffect(() => {
-        const token = window.localStorage.getItem("userkey");
         console.log("token: ", token);
         async function getRoommateGroup() {
             try {
@@ -29,8 +29,11 @@ function Transaction() {
             }
         }
         getRoommateGroup();
+    }, []);
 
+    useEffect(()=> {
         async function getTransactions() {
+            console.log("roommategroup.gid", roommateGroup.gid);
             try {
                 const res = await axios.post("/finance/getTransactions", { gid: roommateGroup.gid }, {headers: {'auth-token': token}});
                 console.log("transaction data: ", res.data);
@@ -41,7 +44,7 @@ function Transaction() {
             }
         }
         getTransactions();
-      }, []);
+      }, [roommateGroup, transactions]);
 
   return (
     <div className='background'>

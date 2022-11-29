@@ -44,7 +44,7 @@ function Transaction() {
             }
         }
         getTransactions();
-      }, [roommateGroup, transactions]);
+      }, [roommateGroup]);
 
   return (
     <div className='background'>

@@ -5,19 +5,20 @@ import { Scheduler, DayView, WeekView } from '@progress/kendo-react-scheduler';
 import '@progress/kendo-date-math/tz/America/Los_Angeles';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import DotLoader from "react-spinners/DotLoader";
 
 function Schedule() {
     const navigate = useNavigate();
     const [view, setView] = useState('day');
     const [date, setDate] = useState(new Date());
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const [groupId, setGroupId] = useState(null);
 
     const baseData = [
       {
           "name": "flying",
-          "start": "2022-11-29T19:00:17.000Z",
-          "end": "2022-11-29T20:00:17.000Z",
+          "start": new Date("2022-11-29T19:00:17.000Z"),
+          "end": new Date("2022-11-29T20:00:17.000Z"),
           "associated_with": "638522c82ebe4ba37ae88afb",
           "associated_with_name": "Abhishek Marda",
           "gcal_event_id": "afisflh58pfi3i7ennke8a28ek"
@@ -34,39 +35,75 @@ function Schedule() {
       // recurrenceId: 'RecurrenceID',
       // recurrenceExceptions: 'RecurrenceException'
     };
+
+
+    
     useEffect(() => {
-      const token = window.localStorage.getItem("userkey");
-      console.log("token: ", token);
-      async function getGroupId() {
-          try {
-              const res = await axios.get("/user/checkUserInGroup/", {headers: {'auth-token': token}});
-              console.log("groupId: ", res.data.gid);
-              setGroupId(res.data.gid);
-          } catch (err) {
-              console.error(err.response.data);
-              console.log("Not in a group.");
-          }
+      async function setUpCalendarData() {
+        let local_gid = null;
+        const token = window.localStorage.getItem("userkey");
+        console.log("token: ", token);
+        try {
+          const res = await axios.get("/user/checkUserInGroup/", {headers: {'auth-token': token}});
+          console.log("groupId: ", res.data.gid);
+          local_gid = res.data.gid;
+          setGroupId(res.data.gid);
+        } catch (err) {
+            console.error(err.response.data);
+            console.log("Not in a group.");
+        }
+        try {
+          const res = await axios.get("/calendar/" + local_gid + "/getCalendar/");
+          console.log("calendar data: ", res.data);
+          let calendar_data = res.data;
+          calendar_data.forEach((ele, index) => {
+            calendar_data[index].start = new Date(ele.start);
+            calendar_data[index].end = new Date(ele.end);
+          })
+          //res.data.forEach()
+          //setData(baseData);
+          setData(calendar_data);
+        } catch (err) {
+            console.error(err.response.data);
+            console.log("Not in a group.");
+        }
       }
-      getGroupId();
+      setUpCalendarData();
+    //   const token = window.localStorage.getItem("userkey");
+    //   console.log("token: ", token);
+
+    //   async function getGroupId() {
+    //       try {
+    //           const res = await axios.get("/user/checkUserInGroup/", {headers: {'auth-token': token}});
+    //           console.log("groupId: ", res.data.gid);
+    //           setGroupId(res.data.gid);
+    //       } catch (err) {
+    //           console.error(err.response.data);
+    //           console.log("Not in a group.");
+    //       }
+    //   }
+    //   async function getCalendar() {
+    //     try {
+    //         const res = await axios.get("/calendar/" + groupId + "/getCalendar/");
+    //         console.log("calendar data: ", res.data);
+    //         let calendar_data = res.data;
+    //         calendar_data.forEach((ele, index) => {
+    //           calendar_data[index].start = new Date(ele.start);
+    //           calendar_data[index].end = new Date(ele.end);
+    //         })
+    //         //res.data.forEach()
+    //         //setData(baseData);
+    //         setData(calendar_data);
+    //     } catch (err) {
+    //         console.error(err.response.data);
+    //         console.log("Not in a group.");
+    //     }
+    // }
+    //   getGroupId();
+    //   getCalendar();
     }, []);
 
-    useEffect(() => {
-      async function getCalendar() {
-          try {
-              const res = await axios.get("/calendar/" + groupId + "/getCalendar/");
-              console.log("calendar data: ", res.data);
-
-              //res.data.forEach()
-              //setData(baseData);
-              setData(res.data);
-          } catch (err) {
-              console.error(err.response.data);
-              console.log("Not in a group.");
-          }
-      }
-      getCalendar();
-  }, [groupId]);
-
+   
 
     const handleViewChange = React.useCallback(event => {
       setView(event.value);
@@ -80,14 +117,27 @@ function Schedule() {
         <div style={{width: '90%', marginBottom: '20px'}}>
             <Button className='button' onClick={()=>navigate('/home')}>Home</Button>
         </div>
-        <Scheduler data={data} 
-        view={view} 
-        onViewChange={handleViewChange} 
-        date={date} onDateChange={handleDateChange} modelFields={customModelFields} 
-        >
-            <DayView />
-            <WeekView />
-        </Scheduler>
+        {data && 
+          <Scheduler data={data} 
+          view={view} 
+          onViewChange={handleViewChange} 
+          date={date} onDateChange={handleDateChange} modelFields={customModelFields} 
+          >
+              <DayView />
+              <WeekView />
+          </Scheduler>
+        }
+        {!data && <DotLoader
+        color={"#ffffff"}
+        loading={true}
+        
+        size={100}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />}
+      
+
+     
     </div>
     )
 }

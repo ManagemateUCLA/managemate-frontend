@@ -4,7 +4,7 @@
     background-color: #B0C0E7;
     align-items: center;
     padding-top: 60px;
-    height: 100vh;
+    min-height: 100vh;
 } 
 
 .column {

@@ -144,9 +144,9 @@ function Home() {
                 <div className='column' style={{width: '100%', marginTop:'20px', marginBottom:'20px',justifyContent: 'center', alignItems: 'center'}}> 
                 <h1 style={{width: '80%', textAlign: 'center'}}>You are not in a roommate group. Please either create or join a group.</h1>
                 <div className='row' style={{width: '50%', margin:'20px', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Button className='button' style={{height: '10%'}} 
+                        <Button className='button' 
                             onClick={() => {setIsCreate(true); openModal();}}>Create a Group</Button>
-                        <Button className='button' style={{height: '10%'}} 
+                        <Button className='button' 
                             onClick={() => {setIsCreate(false); openModal();}}>Join a Group</Button>
                 </div>
                 </div>

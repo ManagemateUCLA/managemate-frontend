@@ -1,10 +1,10 @@
 const baseData = [{
     "TaskID": 4,
     "OwnerID": 2,
-    "Title": "Bowling tournament",
-    "Description": "",
-    "Start": "2013-06-09T21:00:00.000Z",
-    "End": "2013-06-10T00:00:00.000Z",
+    "Title": "Sweeping",
+    "Description": "Sanchit Aggarwal",
+    "Start": "2022-11-28T21:00:00.000Z",
+    "End": "2022-11-28T22:00:00.000Z",
     "RecurrenceRule": null,
     "RecurrenceID": null,
     "RecurrenceException": null,
@@ -12,10 +12,10 @@ const baseData = [{
   }, {
     "TaskID": 5,
     "OwnerID": 1,
-    "Title": "Take the dog to the vet",
-    "Description": "",
-    "Start": "2013-06-10T07:00:00.000Z",
-    "End": "2013-06-10T08:00:00.000Z",
+    "Title": "Take out the trash",
+    "Description": "Aritra Mullick",
+    "Start": "2022-11-29T23:00:00.000Z",
+    "End": "2022-11-29T23:10:00.000Z",
     "RecurrenceRule": null,
     "RecurrenceID": null,
     "RecurrenceException": null,
@@ -23,14 +23,14 @@ const baseData = [{
   }, {
     "TaskID": 6,
     "OwnerID": 4,
-    "Title": "Call Charlie about the project",
-    "Description": "",
-    "Start": "2013-06-11T11:30:00.000Z",
-    "End": "2013-06-11T13:00:00.000Z",
+    "Title": "Create demo video",
+    "Description": "Kate Land",
+    "Start": "2022-11-28T18:00:00.000Z",
+    "End": "2022-11-28T20:00:00.000Z",
     "RecurrenceRule": null,
     "RecurrenceID": null,
     "RecurrenceException": null,
-    "isAllDay": false
+    "isAllDay": true
   }];
   export const customModelFields = {
     id: 'TaskID',
@@ -52,7 +52,7 @@ const baseData = [{
   
   const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
   
-  export const displayDate = new Date(Date.UTC(currentYear, 5, 24));
+  export const displayDate = new Date(Date.UTC(currentYear, 10, 29));
   export const sampleData = baseData.map(dataItem => ({
     id: dataItem.TaskID,
     start: parseAdjust(dataItem.Start),

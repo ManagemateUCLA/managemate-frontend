@@ -39,6 +39,7 @@ function Schedule() {
           console.log("calendar data: ", res.data);
           let calendar_data = res.data;
           calendar_data.forEach((ele, index) => {
+            calendar_data[index].name = ele.name + " - " + ele.associated_with_name;
             calendar_data[index].start = new Date(ele.start);
             calendar_data[index].end = new Date(ele.end);
           })

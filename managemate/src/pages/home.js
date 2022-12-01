@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import logo from '../components/logo.png';
+import logo from '../styles/logo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";

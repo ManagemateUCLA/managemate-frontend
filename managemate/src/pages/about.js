@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../styles/general.css';
 import Button from 'react-bootstrap/Button';
-import logo from '../components/logo.png';
+import logo from '../styles/logo.png';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 

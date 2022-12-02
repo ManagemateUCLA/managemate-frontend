@@ -9,6 +9,14 @@ const About = () => {
     const [isLogin, setIsLogin] = useState(true);
     const navigate = useNavigate();
 
+    /**
+     * Register function that calls the backend api to register a user.
+     * If the backend is successful, it will send a user token back which stores it in localStorage.
+     * Receiving a 400 error will alert the user to try to register again.
+     * 
+     * No parameters, but it takes in values from the register form (name, email, discord, password).
+     * No return.
+     */
     const register = async() => {
         const name = document.getElementById("name").value;
         const email = document.getElementById("register-email").value;
@@ -27,6 +35,14 @@ const About = () => {
         }
     };
 
+    /**
+     * Login function that calls the backend api to determine if there is such a user. 
+     * If there is a user, it receives a 200 OK and a user token which gets stored in localStorage. 
+     * Receiving a 400 error will alert the user to try to login again.
+     * 
+     * No parameters, but it takes in values from the login form (email, password).
+     * No return.
+     */
     const login = async() => {
         const email = document.getElementById("login-email").value;
         const password = document.getElementById("login-password").value;
@@ -43,6 +59,12 @@ const About = () => {
         }
     };
 
+    /**
+     * Logout function that wipes out the localStorage and refreshes the about page.
+     * 
+     * No parameters.
+     * No return.
+     */
     const logout = () => {
         window.localStorage.clear();
         navigate('/about');

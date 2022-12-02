@@ -10,12 +10,26 @@ function Transaction() {
     const [transactions, setTransactions] = useState([]);
     const token = window.localStorage.getItem("userkey");
 
+    /**
+     * Takes in an epoch time and converts it into a Date variable. 
+     * 
+     * @param d - epoch date
+     * @return dateString - a date variable
+     */
     function formatDate(d) {
         const epoch = Date.parse(d);
         const dateString = new Date(epoch).toLocaleDateString('en-us', { weekday: "long", month: "short", day: "numeric", year: "numeric"});
         return dateString;
     }
 
+    /**
+     * Calls the backend api to get the user's roommate group based on their user token.
+     * If the backend is successful, then the roommateGroup state variable will be set.  
+     * Receiving a 400 error means there was trouble getting what group the user is in.
+     * 
+     * No parameters, but uses the user's token.
+     * No return.
+     */
     useEffect(() => {
         console.log("token: ", token);
         async function getRoommateGroup() {
@@ -31,6 +45,14 @@ function Transaction() {
         getRoommateGroup();
     }, []);
 
+    /**
+     * Calls the backend api to populate the state variable transactions with the group's transaction history.
+     * The function gets called when the roommateGroup state variable changes.
+     * Receiving a 400 error means there was trouble getting the group's transaction history.
+     * 
+     * No parameters, but is depdendent on the groupId state variable.
+     * No return.
+     */
     useEffect(()=> {
         async function getTransactions() {
             console.log("roommategroup.gid", roommateGroup.gid);

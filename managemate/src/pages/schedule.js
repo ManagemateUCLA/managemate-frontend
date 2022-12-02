@@ -21,6 +21,16 @@ function Schedule() {
       end: 'end',
     };
     
+    /**
+     * Calls the backend api to populate the state variable data with the roommate group's chore calendar.
+     * Before the calendar data api can get called, the groupId must be known which is gathered from the 
+     * roommate group calendar api call.
+     * If the backend is successful, the data state variable will populated.  
+     * Receiving a 400 error means there was trouble getting the celdndar data.
+     * 
+     * No parameters.
+     * No return.
+     */
     useEffect(() => {
       async function setUpCalendarData() {
         let local_gid = null;

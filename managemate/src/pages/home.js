@@ -20,6 +20,15 @@ function Home() {
     const token = window.localStorage.getItem("userkey");
     console.log("userkey: ", window.localStorage.getItem("userkey"));
 
+
+    /**
+     * Checks if the user is in a group upon navigating to the home page by calling the "/user/checkUserInGroup/" backend api.
+     * If the user is in a group, it stores the groupId in a state variable.  
+     * Receiving a 400 error means the user is not in a group.
+     * 
+     * No parameters.
+     * No return.
+     */
     useEffect(() => {
         const token = window.localStorage.getItem("userkey");
         console.log("token: ", token);
@@ -36,6 +45,14 @@ function Home() {
         getGroupId();
       }, []);
 
+    /**
+     * Retrieves the user's group's roommate list and bulletin board every time the groupId state variable changes.
+     * Upon success, it populates the state variables "roommateList" and "bulletinBoardMessages." 
+     * Receiving a 400 error means that there was trouble getting either the roommate list or bulletin board messages.
+     * 
+     * No parameters, but dependent on state variable groupId.
+     * No return.
+     */
       useEffect(() => {
         if(groupId) {
             async function getRoommateList() {
@@ -64,6 +81,15 @@ function Home() {
         }
       }, [groupId]);
     
+    /**
+     * Calls the backend api to create a group based on the create group modal form values.
+     * If the backend is successful in adding the user to a group, it will pass back the group code 
+     * which will be displayed on the modal.  
+     * Receiving a 400 error means there was trouble adding the user to a group.
+     * 
+     * No parameters, but gets the values of groupName from the create a group modal.
+     * No return, but displays the group code in the modal upon success.
+     */
     const createGroup = async() => {
         const groupName = document.getElementById("group-name").value;
         const groupId = document.getElementById("group-id");
@@ -80,6 +106,14 @@ function Home() {
         }
     };
     
+    /**
+     * Calls the backend api to join a group based on the group code value from the join a group modal form.
+     * If the backend is successful in adding the user to a group, it will indicate success to the user.  
+     * Receiving a 400 error means there was trouble adding the user to the group.
+     * 
+     * No parameters, but takes in a group code from the join a group modal form.
+     * No return.
+     */
     const joinGroup = async() => {
         const groupCode = document.getElementById("group-code").value;
         const resultMessage = document.getElementById("result-message");
